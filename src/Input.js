@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import React, { useState } from "react";
 
 function Input({ secretWord }) {
     const [currentGuess, setCurrentGuess] = useState("");
@@ -13,7 +13,10 @@ function Input({ secretWord }) {
             value={currentGuess}
             onChange={(event) => setCurrentGuess(event.target.value)}
             />
-            <button data-test="submit-button" className="btn btn-primary mb-2">
+            <button 
+            data-test="submit-button" 
+            onClick={(evt) => {evt.preventDefault();}}
+            className="btn btn-primary mb-2">
             Submit
             </button>
         </form>
