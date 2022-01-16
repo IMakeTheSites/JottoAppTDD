@@ -1,14 +1,15 @@
-// receive success state as a prop
-/**
- * @function
- * @returns {JSX.Element} - REndered component (or null if success prop is false)
- * 
- */
+import PropTypes from "prop-types";
 
-function Input(props) {
+function Input({secretWord}) {
     return (
-        <div data-test="component-input"></div>
+        <div data-test="component-input">
+            {secretWord}
+        </div>
     );
+}
+
+Input.propTypes = {
+    secretWord: PropTypes.string.isRequired,
 }
 
 export default Input;
