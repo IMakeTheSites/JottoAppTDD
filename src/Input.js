@@ -1,9 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { guessWord} from './actions';
 
 function Input({secretWord }) {
     const [currentGuess, setCurrentGuess] = React.useState("");
+    const dispatch = useDispatch();
     const success = useSelector(state => state.success);
 
     if (success) {
@@ -24,7 +26,8 @@ function Input({secretWord }) {
             data-test="submit-button" 
             onClick={(evt) => {
                 evt.preventDefault();
-                // TODO: update guessedWords
+                dispatch(guessWord(currentGuess));
+
                 // TODO: check against secretWord and update success
                 setCurrentGuess("");
                 }}

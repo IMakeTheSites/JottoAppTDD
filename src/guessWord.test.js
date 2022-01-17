@@ -1,8 +1,11 @@
 import React from 'react';
 import {mount} from 'enzyme';
 import App from './App';
-import {findByTestAttr} from '../test/testUtils';
-import { FOCUSABLE_SELECTOR } from '@testing-library/user-event/dist/utils';
+import {findByTestAttr, storeFactory} from '../test/testUtils';
+import { Provider } from 'react-redux';
+
+// activate global mock to make sure getSecretWord doesn't make network call
+jest.mock('./actions');
 
 /**
  * Create wrapper with specified initial conditions,
@@ -13,10 +16,9 @@ import { FOCUSABLE_SELECTOR } from '@testing-library/user-event/dist/utils';
  * @returns {Wrapper} - Enzyme wrapper of mounted App component
  */
 
- const setup = (state = {}) => {
-     
-    // TODO: apply state
-    const wrapper = mount(<App />);
+ const setup = (initialState = {}) => {
+     const store = storeFactory(initialState)
+     const wrapper = mount(<Provider store={store}><App /></Provider>);
 
      // add value to input box
     const inputBox = findByTestAttr(wrapper, 'input-box');
@@ -31,7 +33,7 @@ import { FOCUSABLE_SELECTOR } from '@testing-library/user-event/dist/utils';
 
  
 
- describe.skip('no words guessed', () => {
+ describe('no words guessed', () => {
     let wrapper;
     beforeEach(() => {
         wrapper = setup({
@@ -46,7 +48,7 @@ import { FOCUSABLE_SELECTOR } from '@testing-library/user-event/dist/utils';
     })
  });
 
- describe.skip('some words guessed', () => {
+ describe('some words guessed', () => {
     let wrapper;
     beforeEach(() => {
         wrapper = setup({
@@ -61,7 +63,7 @@ import { FOCUSABLE_SELECTOR } from '@testing-library/user-event/dist/utils';
     });
  });
 
- describe.skip('guess secret word', () => {
+ describe('guess secret word', () => {
     let wrapper;
     beforeEach(() => {
         wrapper = setup({
